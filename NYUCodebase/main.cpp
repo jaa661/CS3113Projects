@@ -43,41 +43,63 @@ int main(int argc, char *argv[])
 #ifdef _WINDOWS
 #glewInit();
 #endif
-    
+//////////////////////////////////////////////////////setup
     Matrix modelMatrix, projectionMatrix, viewMatrix;
     ShaderProgram program(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
+    ShaderProgram program2(RESOURCE_FOLDER"vertex_textured.glsl", RESOURCE_FOLDER"fragment_textured.glsl");
     GLuint emojiTexture = LoadTexture(RESOURCE_FOLDER"P!.png");
+    GLuint grassTexture = LoadTexture(RESOURCE_FOLDER"grass.png");
     glUseProgram(program.programID);
     glViewport(0, 0, 640, 360);
     glEnable(GL_BLEND);
     float lastFrameTicks = 0.0f;
-    
+    float positionX = 0;
+    float positionY = 0;
+    float angle = 0;
+/////////////////////////////////////////loop initiation
     SDL_Event event;
     bool done = false;
     while (!done) {
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
+            if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {//check for quit
                 done = true;
             }
         }
+////////////////////////////////////////////////////////////game loop
+        
+        const Uint8 *keys = SDL_GetKeyboardState(NULL);
+        
+        if(keys[SDL_SCANCODE_RIGHT]){
+            positionX += .5;
+        }
+        if(keys[SDL_SCANCODE_LEFT]){
+            positionX -= .5;
+        }
+        if(keys[SDL_SCANCODE_UP]){
+            positionY += .5;
+        }
+        if(keys[SDL_SCANCODE_DOWN]){
+            positionY -= .5;
+        }
+        float ticks = (float)SDL_GetTicks()/1000.0f;
+        float elapsed = ticks - lastFrameTicks;
+        lastFrameTicks = ticks;
+        angle += 50 * -elapsed;
         
         glClearColor(0.4f, 0.2f, 0.4f, 1.0f);//clear color of screen
         glClear(GL_COLOR_BUFFER_BIT);//clear screen
         
-        projectionMatrix.setOrthoProjection(-3.55, 3.55, -2.0f, 2.0f, -1.0f, 1.0f);
+        projectionMatrix.setOrthoProjection(-8.0, 8.0, -4.5f, 4.5f, -1.0f, 1.0f);
         
         
-        float ticks = (float)SDL_GetTicks()/1000.0f;
-        float elapsed = ticks - lastFrameTicks;
-        lastFrameTicks = ticks;
-        float angle = 50 * -elapsed;
         
         
         //modelMatrix.identity();
-        //modelMatrix.Translate(0.0f, 0.0f, 0.0f);
+        modelMatrix.Translate(positionX, positionY, 0.0f);
         //modelMatrix.Scale(1.0f, 1.0f, 1.0f);
-        modelMatrix.Rotate(angle * (3.14159/180));
+        modelMatrix.Rotate(.001 * angle* angle * angle * (3.14159/180));
         //rotates in radians and CCW
+        
         
         program.setModelMatrix(modelMatrix);
         program.setProjectionMatrix(projectionMatrix);
@@ -99,8 +121,36 @@ int main(int argc, char *argv[])
         glDisableVertexAttribArray(program.positionAttribute);
         glDisableVertexAttribArray(program.texCoordAttribute);
         
+        modelMatrix.identity();
+        //changes
+        program.setModelMatrix(modelMatrix);
 
+        glBindTexture(GL_TEXTURE_2D, grassTexture);
+        float vertices2[] = { -1.5, -1.5, -2.0, -1.5, -2.0, -2.0, -2.0, -2.0, -1.5, -2.0, -1.5, -1.5};
+        glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices2);
+        glEnableVertexAttribArray(program.positionAttribute);
+        float texCoords2[] = {1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0};
+        glVertexAttribPointer(program2.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords2);
+        glEnableVertexAttribArray(program.texCoordAttribute);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDisableVertexAttribArray(program.positionAttribute);
+        glDisableVertexAttribArray(program.texCoordAttribute);
         
+        
+        modelMatrix.identity();
+        //changes
+        program.setModelMatrix(modelMatrix);
+        
+        glBindTexture(GL_TEXTURE_2D, grassTexture);
+        float vertices3[] = { 2.0, -1.5, 1.5, -1.5, 1.5, -2.0, 1.5, -2.0, 2.0, -2.0, 2.0, -1.5};
+        glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, vertices3);
+        glEnableVertexAttribArray(program.positionAttribute);
+        float texCoords3[] = {1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0};
+        glVertexAttribPointer(program2.texCoordAttribute, 2, GL_FLOAT, false, 0, texCoords3);
+        glEnableVertexAttribArray(program.texCoordAttribute);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDisableVertexAttribArray(program.positionAttribute);
+        glDisableVertexAttribArray(program.texCoordAttribute);
         ////////////////post phase
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         SDL_GL_SwapWindow(displayWindow);
