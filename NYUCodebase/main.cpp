@@ -166,8 +166,8 @@ int main(int argc, char *argv[])
         }
         if(keys[SDL_SCANCODE_SPACE]){
             if (ball.speed == 0){
-                ball.speed = 5;
-                done = true;
+                ball.speed = 5;// for reset if score implemented
+                done = true;// for 1 win game
             }
         }
         
@@ -231,16 +231,18 @@ int main(int argc, char *argv[])
             ball.y = 0;
             ball.speed = 0;
             score2++;
-        }*/
+        }// implement for scroe and reset*/
         program.setModelMatrix(modelMatrix);
         program.setProjectionMatrix(projectionMatrix);
         program.setViewMatrix(viewMatrix);
         if(ball.x + ball.width > 8 ){
                 ball.speed = 0;
-                DrawText(&program, 1, "Game Over!", 2, 1);
+                //DrawText(&program, 1, "Game Over!", 2, 1);
+            std::cout<< "YOU WIN!!! :)"<<std::endl<< "Hit space to exit."<<std::endl;
          } if(ball.x - ball.width < -8 ){
              ball.speed = 0;
-             DrawText(&program, 1, "Game Over!", 2, 1);
+             //DrawText(&program, 1, "Game Over!", 2, 1);
+             std::cout<< "YOU LOSE! :("<<std::endl<< "Hit space to exit."<<std::endl;
          }
         if(ball.rotation <0)
             ball.rotation = 360 + ball.rotation;
