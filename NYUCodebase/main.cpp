@@ -159,15 +159,24 @@ int main(int argc, char *argv[])
             positionX -= .5;
         }*/
         if(keys[SDL_SCANCODE_UP]){
-            player.y += elapsed*player.speed;
+            if(player.y + player.height + elapsed*player.speed < 4.5)
+                player.y += elapsed*player.speed;
         }
         if(keys[SDL_SCANCODE_DOWN]){
-            player.y -= elapsed*player.speed;
+            if(player.y - player.height - elapsed*player.speed > -4.5)
+                player.y -= elapsed*player.speed;
         }
         if(keys[SDL_SCANCODE_SPACE]){
             if (ball.speed == 0){
-                ball.speed = 5;// for reset if score implemented
+                //ball.speed = 5;// for reset if score implemented
                 done = true;// for 1 win game
+            }
+        }
+        if(keys[SDL_SCANCODE_R]){
+            if (ball.speed == 0){
+                ball.x = 0;
+                ball.y = 0;
+                ball.speed = 5;// for reset if score implemented
             }
         }
         
@@ -238,11 +247,11 @@ int main(int argc, char *argv[])
         if(ball.x + ball.width > 8 ){
                 ball.speed = 0;
                 //DrawText(&program, 1, "Game Over!", 2, 1);
-            std::cout<< "YOU WIN!!! :)"<<std::endl<< "Hit space to exit."<<std::endl;
+            std::cout<< "YOU WIN!!! :)"<<std::endl<< "Hit space to exit, or R to reset."<<std::endl;
          } if(ball.x - ball.width < -8 ){
              ball.speed = 0;
              //DrawText(&program, 1, "Game Over!", 2, 1);
-             std::cout<< "YOU LOSE! :("<<std::endl<< "Hit space to exit."<<std::endl;
+             std::cout<< "YOU LOSE! :("<<std::endl<< "Hit space to exit, or R to reset."<<std::endl;
          }
         if(ball.rotation <0)
             ball.rotation = 360 + ball.rotation;
@@ -289,9 +298,11 @@ int main(int argc, char *argv[])
         ///////////////////
         modelMatrix.identity();
         if(ball.y > paddle.y)
-            paddle.y += elapsed*paddle.speed;
+            if(paddle.y + paddle.height + elapsed*paddle.speed < 4.5)
+                paddle.y += elapsed*paddle.speed;
         if(ball.y < paddle.y)
-            paddle.y -= elapsed*paddle.speed;
+            if(paddle.y - paddle.height - elapsed*paddle.speed > -4.5)
+                paddle.y -= elapsed*paddle.speed;
         
         modelMatrix.Translate(paddle.x, paddle.y, 0.0f);
         //changes
