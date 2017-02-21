@@ -23,6 +23,7 @@
 		6DEF23C41B96CC2600BCE792 /* vertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 6DEF23C01B96CC2600BCE792 /* vertex.glsl */; };
 		E915685D1E4A47420040F485 /* P!.png in Resources */ = {isa = PBXBuildFile; fileRef = E915685C1E4A47420040F485 /* P!.png */; };
 		E915685F1E4A59C50040F485 /* grass.png in Resources */ = {isa = PBXBuildFile; fileRef = E915685E1E4A59C50040F485 /* grass.png */; };
+		E987B9FF1E5BAD1C008A6BA4 /* winky.png in Resources */ = {isa = PBXBuildFile; fileRef = E987B9FE1E5BAD1C008A6BA4 /* winky.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		6DEF23C01B96CC2600BCE792 /* vertex.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vertex.glsl; sourceTree = "<group>"; };
 		E915685C1E4A47420040F485 /* P!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "P!.png"; sourceTree = "<group>"; };
 		E915685E1E4A59C50040F485 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
+		E987B9FE1E5BAD1C008A6BA4 /* winky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = winky.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				E915685E1E4A59C50040F485 /* grass.png */,
+				E987B9FE1E5BAD1C008A6BA4 /* winky.png */,
 				E915685C1E4A47420040F485 /* P!.png */,
 				6D5A86E119AE5CAA0066C1FD /* Code */,
 				6D5A86B419AE5C710066C1FD /* Supporting Files */,
@@ -221,6 +224,7 @@
 				E915685D1E4A47420040F485 /* P!.png in Resources */,
 				E915685F1E4A59C50040F485 /* grass.png in Resources */,
 				6DE9D2F11BA6AB8C002D599C /* fragment_textured.glsl in Resources */,
+				E987B9FF1E5BAD1C008A6BA4 /* winky.png in Resources */,
 				6D5A86C619AE5C710066C1FD /* Images.xcassets in Resources */,
 				6D5A86BE19AE5C710066C1FD /* Credits.rtf in Resources */,
 				6DEF23C41B96CC2600BCE792 /* vertex.glsl in Resources */,
