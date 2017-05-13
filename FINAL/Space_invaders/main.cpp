@@ -871,24 +871,29 @@ void RenderMainMenu(ShaderProgram program, GLuint font, unsigned int spriteSheet
     glDisableVertexAttribArray(program.texCoordAttribute);
     
     modelMatrix.identity();
-    modelMatrix.Translate(-10.0f, 7.5f, 0.0f);
+    modelMatrix.Translate(-13.0f, 7.5f, 0.0f);
     program.setModelMatrix(modelMatrix);
-    DrawText(&program, font, "Legends of Lambda", 1.0f, 0);
+    DrawText(&program, font, "Legends of the Maze", 1.5f, 0);
     modelMatrix.identity();
-    modelMatrix.Translate(-9.5f, 5.5f, 0.0f);
+    modelMatrix.Translate(-10.0f, 3.0f, 0.0f);
     program.setModelMatrix(modelMatrix);
     std::string message = "Use the Arrow Keys to Move";
-    DrawText(&program, font, message, 0.60f, 0);
+    DrawText(&program, font, message, 0.90f, 0);
     modelMatrix.identity();
-    modelMatrix.Translate(-9.5f, 5.0f, 0.0f);
+    modelMatrix.Translate(-10.0f, 1.0f, 0.0f);
     program.setModelMatrix(modelMatrix);
-     message = "Use E to enter doors, and P to pause";
-    DrawText(&program, font, message, 0.60f, 0);
+     message = "E to enter doors, P to pause";
+    DrawText(&program, font, message, 0.90f, 0);
     modelMatrix.identity();
-    modelMatrix.Translate(-9.5f, 4.5f, 0.0f);
+    modelMatrix.Translate(-10.0f, -1.0f, 0.0f);
     program.setModelMatrix(modelMatrix);
-    message = "spacebar to start, and Beware of Bats!";
-    DrawText(&program, font, message, 0.60f, 0);
+    message = "spacebar to start,";
+    DrawText(&program, font, message, 0.90f, 0);
+    modelMatrix.identity();
+    modelMatrix.Translate(-10.0f, -3.0f, 0.0f);
+    program.setModelMatrix(modelMatrix);
+    message = "and Beware of Bats!";
+    DrawText(&program, font, message, 0.90f, 0);
 }
 void RenderPauseMenu(ShaderProgram program, GLuint font, unsigned int spriteSheetTexture){
     Matrix modelMatrix, projectionMatrix, viewMatrix;
@@ -937,6 +942,11 @@ void RenderLoseMenu(ShaderProgram program, GLuint font, unsigned int spriteSheet
     program.setModelMatrix(modelMatrix);
     std::string message = "Thanks for Playing!";
     DrawText(&program, font, message, 0.60f, 0);
+    modelMatrix.identity();
+    modelMatrix.Translate(-10.02f, 5.5f, 0.0f);
+    program.setModelMatrix(modelMatrix);
+    message = "Q to quit  ::  R to restart";
+    DrawText(&program, font, message, 0.60f, 0);
     }
 void RenderWinMenu(ShaderProgram program, GLuint font, unsigned int spriteSheetTexture ){
     Matrix modelMatrix, projectionMatrix, viewMatrix;
@@ -967,6 +977,11 @@ void RenderWinMenu(ShaderProgram program, GLuint font, unsigned int spriteSheetT
     program.setModelMatrix(modelMatrix);
     std::string message = "Thanks for Playing!";
     DrawText(&program, font, message, 0.60f, 0);
+    modelMatrix.identity();
+    modelMatrix.Translate(-10.02f, 5.5f, 0.0f);
+    program.setModelMatrix(modelMatrix);
+    message = "Q to quit";
+    DrawText(&program, font, message, 0.60f, 0);
 }
 void RenderGameLevel(grounded player, ShaderProgram program, std::vector<floating> entities, Entity tiles[80][80], GLuint font, unsigned int spriteSheetTexture, float elapsed){
     Matrix modelMatrix, projectionMatrix, viewMatrix;
@@ -974,7 +989,7 @@ void RenderGameLevel(grounded player, ShaderProgram program, std::vector<floatin
     viewMatrix.identity();
     viewMatrix.Translate(-player.position.x, -player.position.y, 0.0f);
     for(int i=0; i < entities.size(); i++) {
-        if (collideRect(player, entities[i])){
+        if (collideRect(player, entities[i])&&entities[i].interact == false){
             float screenShakeValue = 0;
             screenShakeValue += elapsed;
             viewMatrix.Translate(0.0f, sin(screenShakeValue * 5)* 5,
@@ -1052,6 +1067,9 @@ void ProcessMainMenuInput(grounded player, GameState &state, const Uint8 *keys){
     if(keys[SDL_SCANCODE_SPACE]){
         state = NEW;
     }
+    if(keys[SDL_SCANCODE_Q]){
+        state = FINISH;
+    }
 }
 void ProcessGameLevelInput(grounded &player, GameState &state, const Uint8 *keys, float elapsed ){
     if(keys[SDL_SCANCODE_RIGHT]){
@@ -1083,6 +1101,16 @@ void ProcessGameLevelInput(grounded &player, GameState &state, const Uint8 *keys
         player.enter = true;
     }
 }
+void ProcessEndInput(grounded &player, GameState &state, const Uint8 *keys, float elapsed ){
+    if(keys[SDL_SCANCODE_Q]){
+        state = FINISH;
+    }
+    if(keys[SDL_SCANCODE_R]){
+        player.health = 3;
+        state = NEW;
+    }
+}
+
 void ProcessPauseInput(grounded &player, GameState &state, const Uint8 *keys ){
     if(keys[SDL_SCANCODE_U]){
         state = PLAY;
@@ -1090,6 +1118,7 @@ void ProcessPauseInput(grounded &player, GameState &state, const Uint8 *keys ){
     if(keys[SDL_SCANCODE_Q]){
         state = GAME_OVER;
     }
+    
 }
 void ProcessGameLevelEnemy(std::vector<floating> &entities, float elapsed, grounded &player, GameState &state, int &level){
 if(entities.size()>0){
@@ -1153,7 +1182,9 @@ if(entities.size()>0){
 
 int main(int argc, char *argv[]){
     SDL_Init(SDL_INIT_VIDEO);
-    displayWindow = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 360, SDL_WINDOW_OPENGL);
+    int windowx = 640;
+    int windowy = 360;
+    displayWindow = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowx, windowy, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
 #ifdef _WINDOWS
@@ -1164,7 +1195,7 @@ int main(int argc, char *argv[]){
     GameState state = MENU;
     Matrix modelMatrix, projectionMatrix, viewMatrix;
     glUseProgram(program.programID);
-    glViewport(0, 0, 640, 360);
+    glViewport(0, 0, windowx, windowy);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);//clear color of screen
@@ -1253,22 +1284,17 @@ int main(int argc, char *argv[]){
             case GAME_OVER:
                 //Mix_FreeMusic(music);
                 RenderLoseMenu(program, font, spriteSheetTexture);
-                state = FINISH;
+                ProcessEndInput(player, state, keys, elapsed);
+                level = 1;
                 break;
                 
             case WIN:
                 RenderWinMenu(program, font, spriteSheetTexture);
+                ProcessEndInput(player, state, keys, elapsed);
+                level = 1;
                 break;
                 
             case FINISH:
-                clock_t time_end;
-                time_end = clock() + 3 * CLOCKS_PER_SEC/1;
-                while (clock() < time_end)
-                {
-                    RenderLoseMenu(program, font, spriteSheetTexture);
-                    cout<<"finishing"<<endl;
-                }
-                cout<<"done"<<endl;
                 done = true;
                 break;
                 
