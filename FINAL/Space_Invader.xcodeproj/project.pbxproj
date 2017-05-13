@@ -39,6 +39,7 @@
 		E9A029861EC75E5300B6C22B /* Dam.wav in Resources */ = {isa = PBXBuildFile; fileRef = E9A029851EC75E5300B6C22B /* Dam.wav */; };
 		E9A029881EC7711500B6C22B /* Map2.txt in Resources */ = {isa = PBXBuildFile; fileRef = E9A029871EC7711500B6C22B /* Map2.txt */; };
 		E9A0298A1EC777B500B6C22B /* Map3.txt in Resources */ = {isa = PBXBuildFile; fileRef = E9A029891EC777B500B6C22B /* Map3.txt */; };
+		E9A0298C1EC7791100B6C22B /* Map1.txt in Resources */ = {isa = PBXBuildFile; fileRef = E9A0298B1EC7791100B6C22B /* Map1.txt */; };
 		E9FABA0F1E94470D00967EC1 /* spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = E9FABA0E1E94470D00967EC1 /* spritesheet.png */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		E9A029851EC75E5300B6C22B /* Dam.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Dam.wav; sourceTree = "<group>"; };
 		E9A029871EC7711500B6C22B /* Map2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Map2.txt; sourceTree = "<group>"; };
 		E9A029891EC777B500B6C22B /* Map3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Map3.txt; sourceTree = "<group>"; };
+		E9A0298B1EC7791100B6C22B /* Map1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Map1.txt; sourceTree = "<group>"; };
 		E9FABA0E1E94470D00967EC1 /* spritesheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spritesheet.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +159,7 @@
 				E96AFBB91E81CC4900ADA361 /* font2.png */,
 				E9A029771EC6ADA600B6C22B /* Fountain.mp3 */,
 				E9A029871EC7711500B6C22B /* Map2.txt */,
+				E9A0298B1EC7791100B6C22B /* Map1.txt */,
 				E9A029831EC732EC00B6C22B /* Cave.png */,
 				E9A029891EC777B500B6C22B /* Map3.txt */,
 				E9A029781EC6ADA600B6C22B /* Storms.mp3 */,
@@ -275,6 +278,7 @@
 				E96AFBBC1E81EF5D00ADA361 /* sheet.png in Resources */,
 				E9A029841EC732EC00B6C22B /* Cave.png in Resources */,
 				E9A0297C1EC6AFF100B6C22B /* characters_1.png in Resources */,
+				E9A0298C1EC7791100B6C22B /* Map1.txt in Resources */,
 				E9A0298A1EC777B500B6C22B /* Map3.txt in Resources */,
 				E9A029821EC6BD9700B6C22B /* sewer_1.png in Resources */,
 				6D5A86B819AE5C710066C1FD /* InfoPlist.strings in Resources */,

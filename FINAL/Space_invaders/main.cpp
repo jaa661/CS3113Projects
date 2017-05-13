@@ -356,7 +356,7 @@ public:
         velocity.x += accel.x* elapsed;
         position.x += velocity.x* elapsed;
         accel.x = 0;
-        for(int i = 0; i < LEVEL_HEIGHT;i++){
+        /*for(int i = 0; i < LEVEL_HEIGHT;i++){
             for(int j = 0; j < LEVEL_WIDTH;j++){
                 if ((checkTile(tiles[i][j]))&&(tiles[i][j].solid == false)){
                     position.x -= velocity.x* elapsed;
@@ -364,17 +364,19 @@ public:
                 }
             }
         }
+        */
         velocity.y += accel.y* elapsed;
         position.y += velocity.y* elapsed;
         accel.y = 0;
-        for(int i = 0; i < LEVEL_HEIGHT;i++){
+        /*
+         for(int i = 0; i < LEVEL_HEIGHT;i++){
             for(int j = 0; j < LEVEL_WIDTH;j++){
                 if ((checkTile(tiles[i][j]))&&(tiles[i][j].solid == false)){
                     position.y -= velocity.y* elapsed;
                     break;
                 }
             }
-        }
+        }*/
         if ((velocity.x !=0)||(velocity.y !=0))
             moving = true;
         else
@@ -605,7 +607,7 @@ void init(grounded &player, GameState &state, std::vector<floating> &entities, E
     unsigned int characterSheetTexture = LoadTexture(RESOURCE_FOLDER"characters_1.png");
     SheetSprite mySprite = SheetSprite(spriteSheetTexture,425.0f/1024.0f, 468.0f/1024.0f, 93.0f/1024.0f, 84.0f/1024.0f, 1);
     SheetSprite hisSprite = SheetSprite(characterSheetTexture,425.0f/1024.0f, 468.0f/1024.0f, 93.0f/1024.0f, 84.0f/1024.0f, 1);
-    player.position.x = 170.5;
+    player.position.x = 17.5;
     player.position.y = -68;
     player.height = 1 ;
     player.width = 1;
@@ -642,6 +644,21 @@ void init(grounded &player, GameState &state, std::vector<floating> &entities, E
     }
     int positionx = 19.5;
     int positiony = -58;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 22.5;
+    positiony = -58;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 48;
+    positiony = -52;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 33;
+    positiony = -15;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 18;
+    positiony = -12;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 42;
+    positiony = -11;
     placeEntity("53", positionx, positiony, entities);
     positionx = 55.5;
     positiony = -8;
@@ -697,7 +714,24 @@ void init2(grounded &player, GameState &state, std::vector<floating> &entities, 
     int positionx = 19.5;
     int positiony = -58;
     placeEntity("53", positionx, positiony, entities);
-    positionx = 55.5;
+    positionx = 16;
+    positiony = -58;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 55;
+    positiony = -43;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 55;
+    positiony = -33;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 36;
+    positiony = -8;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 18;
+    positiony = -12;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 42;
+    positiony = -11;
+    placeEntity("53", positionx, positiony, entities);    positionx = 55.5;
     positiony = -8;
     placeEntity("-1", positionx, positiony, entities);
 }
@@ -750,6 +784,30 @@ void init3(grounded &player, GameState &state, std::vector<floating> &entities, 
     }
     int positionx = 19.5;
     int positiony = -58;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 16;
+    positiony = -58;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 56;
+    positiony = -32;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 62;
+    positiony = -32;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 56;
+    positiony = -43;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 43;
+    positiony = -37;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 16;
+    positiony = -9;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 53;
+    positiony = 18;
+    placeEntity("53", positionx, positiony, entities);
+    positionx = 39;
+    positiony = -10;
     placeEntity("53", positionx, positiony, entities);
     positionx = 55.5;
     positiony = -8;
@@ -824,12 +882,12 @@ void RenderMainMenu(ShaderProgram program, GLuint font, unsigned int spriteSheet
     modelMatrix.identity();
     modelMatrix.Translate(-9.5f, 5.0f, 0.0f);
     program.setModelMatrix(modelMatrix);
-     message = "Use space to attack, and Q to quit";
+     message = "Use E to enter doors, and P to pause";
     DrawText(&program, font, message, 0.60f, 0);
     modelMatrix.identity();
     modelMatrix.Translate(-9.5f, 4.5f, 0.0f);
     program.setModelMatrix(modelMatrix);
-    message = "spacebar to start";
+    message = "spacebar to start, and Beware of Bats!";
     DrawText(&program, font, message, 0.60f, 0);
 }
 void RenderPauseMenu(ShaderProgram program, GLuint font, unsigned int spriteSheetTexture){
@@ -910,28 +968,38 @@ void RenderWinMenu(ShaderProgram program, GLuint font, unsigned int spriteSheetT
     std::string message = "Thanks for Playing!";
     DrawText(&program, font, message, 0.60f, 0);
 }
-void RenderGameLevel(grounded player, ShaderProgram *program, std::vector<floating> entities, Entity tiles[80][80], GLuint font, unsigned int spriteSheetTexture){
+void RenderGameLevel(grounded player, ShaderProgram program, std::vector<floating> entities, Entity tiles[80][80], GLuint font, unsigned int spriteSheetTexture, float elapsed){
     Matrix modelMatrix, projectionMatrix, viewMatrix;
     glClear(GL_COLOR_BUFFER_BIT);//clear screen
     viewMatrix.identity();
     viewMatrix.Translate(-player.position.x, -player.position.y, 0.0f);
-    program->setViewMatrix(viewMatrix);
+    for(int i=0; i < entities.size(); i++) {
+        if (collideRect(player, entities[i])){
+            float screenShakeValue = 0;
+            screenShakeValue += elapsed;
+            viewMatrix.Translate(0.0f, sin(screenShakeValue * 5)* 5,
+            0.0f);
+        }}
+    program.setViewMatrix(viewMatrix);
     for(int i = 0; i < LEVEL_HEIGHT;i++){
         for(int j = 0; j < LEVEL_WIDTH;j++){
-            tiles[i][j].draw(program);
+            tiles[i][j].draw(&program);
         }
     }
     for(int i=0; i < entities.size(); i++) {
         if (entities[i].index != -1)
-            entities[i].draw(program);
+            entities[i].draw(&program);
     }//draw entities
-    player.draw(program);//draw player
-    modelMatrix.identity();
-    modelMatrix.Translate(-7.0f, 4.0f, 0.0f);
-    program->setModelMatrix(modelMatrix);
+    player.draw(&program);//draw player
     string health;
+    modelMatrix.Translate(player.position.x-15.0f, player.position.y+7.0f, 0.0f);
+    program.setModelMatrix(modelMatrix);
     health = "Health Remaining: " + std::to_string(player.health);
-    DrawText(program, font, health, 0.30f, 0);
+    DrawText(&program, font, health, 0.50f, 0);
+    
+
+
+
 }
 void UpdateMainMenu(){
 
@@ -997,7 +1065,6 @@ void ProcessGameLevelInput(grounded &player, GameState &state, const Uint8 *keys
         player.direction = 2;
         player.enter = false;
 
-
     }
     if(keys[SDL_SCANCODE_UP]){
         player.accel.y = 40;
@@ -1031,15 +1098,15 @@ if(entities.size()>0){
         int ydis = (((int)entities[i].position.y)-((int)player.position.y))^2;
         int dis = sqrt(xdis+ydis);
         if(entities[i].interact == false){//for enemies
-        if (dis < 10){
+        if (dis < 3){
             if (player.position.x >entities[i].position.x)
-                entities[i].accel.x += 7;
+                entities[i].accel.x += 9;
             else
-                entities[i].accel.x += -7;
+                entities[i].accel.x += -9;
             if (player.position.y >entities[i].position.y)
-                entities[i].accel.y += 7;
+                entities[i].accel.y += 9;
             else
-                entities[i].accel.y += -7;
+                entities[i].accel.y += -9;
 
         }
         if (collideRect(player, entities[i])){
@@ -1176,7 +1243,7 @@ int main(int argc, char *argv[]){
                     init2(player, state, entities, tiles);
                 }
                 if (level == 3){
-                    init2(player, state, entities, tiles);
+                    init3(player, state, entities, tiles);
                 }
                 if (level == 4){
                     state = WIN;
@@ -1206,7 +1273,7 @@ int main(int argc, char *argv[]){
                 break;
                 
             case PLAY:
-                RenderGameLevel(player, &program, entities, tiles, font, spriteSheetTexture);
+                RenderGameLevel(player, program, entities, tiles, font, spriteSheetTexture, elapsed);
                 animationElapsed += elapsed;
                 if(animationElapsed > 1.0/framesPerSecond) {
                     animate(modifier, player, entities);
