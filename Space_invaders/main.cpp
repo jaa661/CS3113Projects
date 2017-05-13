@@ -350,7 +350,7 @@ void init(grounded &player, GameState &state, std::vector<floating> &entities){
     SheetSprite mySprite = SheetSprite(spriteSheetTexture,425.0f/1024.0f, 468.0f/1024.0f, 93.0f/1024.0f, 84.0f/1024.0f, 1);
     player.position.x = 0;
     player.position.y = -3.5;
-    player.height = .5;
+    player.height = .5 ;
     player.width = .5;
     player.velocity.x = 0;
     player.velocity.y = 0;
